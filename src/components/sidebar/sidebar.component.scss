@@ -1,32 +1,32 @@
 .container {
-    position: absolute;
-    top: 60px;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: #eee;
+  position: absolute;
+  top: 60px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #eee;
 }
 
 .sidenav {
-    width: 250px;
-    background-color: #eee;
+  width: 250px;
+  background-color: #eee;
 }
 
 .main {
-    background-color: #fff;
-    height: calc(100vh - 60px);
+  background-color: #fff;
+  height: calc(100vh - 60px);
 }
 
 .toolbar {
-    height: 60px;
+  height: 60px;
 }
 
 .title {
-    padding-left: 10px;
+  padding-left: 10px;
 }
 
 a {
-    width: 100%;
-    font-size: 16px;
-    padding-top: 6px;
+  width: 100%;
+  font-size: 16px;
+  padding-top: 6px;
 }

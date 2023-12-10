@@ -1,7 +1,9 @@
 <div class="main">
   <div class="button-row">
     <button mat-raised-button color="warn" (click)="onCancel()">Cancel</button>
-    <button mat-raised-button color="primary" (click)="onSubmit()">{{ saveButtonMessage }}</button>
+    <button mat-raised-button color="primary" (click)="onSubmit()">
+      {{ saveButtonMessage }}
+    </button>
   </div>
   <div>
     <mat-card class="card">
@@ -14,7 +16,10 @@
             <mat-error>Party Name is required</mat-error>
             }
           </mat-form-field>
-          <mat-form-field appearance="outline" class="field secondary-field pr10">
+          <mat-form-field
+            appearance="outline"
+            class="field secondary-field pr10"
+          >
             <mat-label>GST Type</mat-label>
             <mat-select formControlName="gstType">
               <mat-option value="one">Regular</mat-option>
@@ -25,7 +30,10 @@
             <mat-label>GSTIN</mat-label>
             <input matInput formControlName="gstin" />
           </mat-form-field>
-          <mat-form-field appearance="outline" class="field secondary-field pr10">
+          <mat-form-field
+            appearance="outline"
+            class="field secondary-field pr10"
+          >
             <mat-label>Phone Number</mat-label>
             <input matInput type="number" formControlName="contact" />
           </mat-form-field>
@@ -33,8 +41,8 @@
             <mat-label>Email</mat-label>
             <input matInput formControlName="email" />
             @if (partyForm.get('name')?.invalid) {
-              <mat-error>Provide valid email address</mat-error>
-              }
+            <mat-error>Provide valid email address</mat-error>
+            }
           </mat-form-field>
           <mat-form-field appearance="outline" class="field primary-field">
             <mat-label>Address</mat-label>

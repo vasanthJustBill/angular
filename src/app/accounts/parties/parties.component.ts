@@ -1,46 +1,46 @@
-import { Component } from '@angular/core';
-import _ from 'lodash';
-import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
-import { SharedService } from '../shared.service';
+import { Component } from "@angular/core";
+import _ from "lodash";
+import { MatDialog } from "@angular/material/dialog";
+import { Router } from "@angular/router";
+import { SharedService } from "../shared.service";
 
 @Component({
-  selector: 'app-parties',
-  templateUrl: './parties.component.html',
-  styleUrl: './parties.component.scss',
+  selector: "app-parties",
+  templateUrl: "./parties.component.html",
+  styleUrl: "./parties.component.scss",
 })
 export class PartiesComponent {
   columnDefs = [
     {
-      headerName: 'Party Name',
-      field: 'name',
+      headerName: "Party Name",
+      field: "name",
     },
     {
-      headerName: 'GST Type',
-      field: 'gstType',
+      headerName: "GST Type",
+      field: "gstType",
     },
     {
-      headerName: 'GSTIN',
-      field: 'gstin',
-      cellDataType: 'number',
+      headerName: "GSTIN",
+      field: "gstin",
+      cellDataType: "number",
     },
     {
-      headerName: 'Phone Number',
-      field: 'contact',
-      type: 'number',
-      cellDataType: 'number',
+      headerName: "Phone Number",
+      field: "contact",
+      type: "number",
+      cellDataType: "number",
     },
     {
-      headerName: 'Email ID',
-      field: 'email',
+      headerName: "Email ID",
+      field: "email",
     },
     {
-      headerName: 'Address',
-      field: 'address',
+      headerName: "Address",
+      field: "address",
     },
     {
-      headerName: 'State',
-      field: 'state',
+      headerName: "State",
+      field: "state",
     },
   ];
   rowData: any[] = [];
@@ -54,7 +54,7 @@ export class PartiesComponent {
     checkboxSelection: true,
     pagination: true,
     defaultCsvExportParams: {
-      fileName: 'Parties',
+      fileName: "Parties",
     },
   };
 
@@ -70,12 +70,12 @@ export class PartiesComponent {
       rowData.push({
         id: i,
         name: `Party ${i}`,
-        gstType: 'Regular',
+        gstType: "Regular",
         gstin: 123456789012345,
         contact: 1234567890,
         email: `party${i}@test.com`,
         address: `Address ${i}`,
-        state: 'State',
+        state: "State",
       });
     }
     this.rowData = rowData;
@@ -89,7 +89,7 @@ export class PartiesComponent {
   }
 
   addButtonFn() {
-    this.router.navigateByUrl('/accounts/parties/new');
+    this.router.navigateByUrl("/accounts/parties/new");
   }
 
   editButtonFn(selectedRow: any) {
@@ -99,7 +99,7 @@ export class PartiesComponent {
   }
 
   deleteButtonFn(selectedRow: any) {
-    alert('Delete Button Clicked');
+    alert("Delete Button Clicked");
   }
 
   rowDoubleClickedFn(selectedRow: any) {

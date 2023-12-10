@@ -1,14 +1,13 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { AgGridModule } from 'ag-grid-angular';
-import { MatButtonModule } from '@angular/material/button';
-import { MatDialogModule } from '@angular/material/dialog';
-import { GridComponent } from './grid/grid.component';
-import { MatIconModule } from '@angular/material/icon';
-import { SidebarModule } from '../sidebar/sidebar.module';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { AgGridModule } from "ag-grid-angular";
+import { MatButtonModule } from "@angular/material/button";
+import { MatDialogModule } from "@angular/material/dialog";
+import { GridComponent } from "./grid/grid.component";
+import { MatIconModule } from "@angular/material/icon";
 
 @NgModule({
-  declarations: [GridComponent,],
+  declarations: [GridComponent],
   imports: [
     CommonModule,
     AgGridModule,

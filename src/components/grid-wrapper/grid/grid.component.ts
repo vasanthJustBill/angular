@@ -1,11 +1,11 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ColDef } from 'ag-grid-community';
-import * as _ from 'lodash';
+import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { ColDef } from "ag-grid-community";
+import * as _ from "lodash";
 
 @Component({
-  selector: 'app-grid',
-  templateUrl: './grid.component.html',
-  styleUrl: './grid.component.scss',
+  selector: "app-grid",
+  templateUrl: "./grid.component.html",
+  styleUrl: "./grid.component.scss",
 })
 export class GridComponent {
   @Input() columnDefs: ColDef[] = [];
@@ -21,7 +21,7 @@ export class GridComponent {
   gridApi: any;
   gridColumnApi: any;
   defaultColDef: ColDef<any, any> = {
-    filter: 'agTextColumnFilter',
+    filter: "agTextColumnFilter",
     floatingFilter: true,
     editable: false,
     sortable: true,
@@ -37,8 +37,8 @@ export class GridComponent {
   ngOnInit() {
     if (this.config.checkboxSelection) {
       this.columnDefs.unshift({
-        headerName: '',
-        field: 'checkbox-selection',
+        headerName: "",
+        field: "checkbox-selection",
         checkboxSelection: true,
         headerCheckboxSelection: true,
         sortable: false,
@@ -86,7 +86,7 @@ export class GridComponent {
 
   exportGrid() {
     const visibleColumns = this.gridColumnApi.getAllDisplayedColumns();
-    const excludedColumns = ['checkbox-selection'];
+    const excludedColumns = ["checkbox-selection"];
 
     const filteredColumns = visibleColumns.filter(
       (column: { colId: string }) => !excludedColumns.includes(column.colId)

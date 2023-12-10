@@ -1,0 +1,60 @@
+<div class="main">
+  @if (config.topBar) {
+  <div class="top-bar">
+    <div class="button-row">
+      @if (config.addButton) {
+      <button
+        mat-flat-button
+        color="primary"
+        [disabled]="addDisabled"
+        (click)="addRow()"
+        aria-label="Add Button"
+      >
+        <mat-icon>add</mat-icon>Add
+      </button>
+      } @if (config.editButton) {
+      <button
+        mat-flat-button
+        color="primary"
+        [disabled]="editDisabled"
+        (click)="editRow()"
+        aria-label="Edit Button"
+      >
+        <mat-icon>mode_edit</mat-icon>Edit
+      </button>
+      } @if (config.deleteButton) {
+      <button
+        mat-flat-button
+        color="warn"
+        [disabled]="deleteDisabled"
+        (click)="deleteRow()"
+        aria-label="Delete Button"
+      >
+        <mat-icon>delete</mat-icon>Delete
+      </button>
+      } @if (config.exportButton) {
+      <button
+        mat-flat-button
+        color="primary"
+        (click)="exportGrid()"
+        aria-label="Export Button"
+      >
+        <mat-icon>import_export</mat-icon>Export
+      </button>
+      }
+    </div>
+  </div>
+  }
+  <ag-grid-angular
+    class="ag-theme-material grid"
+    [rowData]="rowData"
+    [columnDefs]="columnDefs"
+    [defaultColDef]="defaultColDef"
+    [pagination]="config.pagination"
+    (rowDoubleClicked)="onRowDoubleClicked($event)"
+    (gridReady)="onGridReady($event)"
+    (rowSelected)="onRowSelected($event)"
+    [rowSelection]="config.rowSelection"
+    [defaultCsvExportParams]="config.defaultCsvExportParams"
+  ></ag-grid-angular>
+</div>

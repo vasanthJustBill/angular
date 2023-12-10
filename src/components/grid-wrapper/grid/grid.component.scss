@@ -1,0 +1,25 @@
+.main {
+    margin-top: 10px;
+    height: 100%;
+    width: 100%;
+}
+
+.grid {
+    height: 100%;
+    width: 100%;
+}
+
+.top-bar {
+    height: 40px;
+}
+
+.button-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: 6px;
+}
+
+.button-row {
+    margin: 8px 8px 8px 0;
+}

@@ -1,0 +1,33 @@
+.main {
+    background-color: #fff;
+    height: calc(100vh - 60px);
+}
+
+.button-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: 6px;
+    padding-top: 10px;
+    padding-right: 10px;
+}
+
+.card {
+    padding-left: 10px;
+}
+
+.field {
+    padding-top: 5px;
+}
+
+.primary-field {
+    width: 100%;
+}
+
+.secondary-field {
+    width: calc(50% - 5px);
+}
+
+.pr10 {
+    padding-right: 10px;
+}

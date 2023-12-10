@@ -1,0 +1,11 @@
+<app-grid
+  class="grid"
+  [columnDefs]="columnDefs"
+  [rowData]="rowData"
+  [config]="config"
+  (gridReady)="onGridReady($event)"
+  (addButtonFn)="addButtonFn()"
+  (editButtonFn)="editButtonFn($event)"
+  (deleteButtonFn)="deleteButtonFn($event)"
+  (rowDoubleClickedFn)="rowDoubleClickedFn($event)"
+></app-grid>

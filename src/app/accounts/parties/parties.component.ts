@@ -78,7 +78,9 @@ export class PartiesComponent {
         state: "State",
       });
     }
-    this.rowData = rowData;
+    setTimeout(() => {
+      this.rowData = rowData;
+    }, 3000);
   }
 
   onGridReady(params: any) {

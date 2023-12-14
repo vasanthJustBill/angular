@@ -11,9 +11,11 @@ import { AccountsRoutingModule } from "./accounts-routing.module";
 import { ReactiveFormsModule } from "@angular/forms";
 import { PartyFormComponent } from "./party-form/party-form.component";
 import { PartiesComponent } from "./parties/parties.component";
-import { SharedService } from "./shared.service";
 import { GridWrapperModule } from "../../components/grid-wrapper/grid-wrapper.module";
 import { TitleBarComponent } from "../../components/title-bar/title-bar.component";
+import { PartiesService } from "./parties.service";
+import { HttpModule } from "../../components/http/http.module";
+import { SidebarModule } from "../../components/sidebar/sidebar.module";
 
 @NgModule({
   declarations: [PartyFormComponent, PartiesComponent],
@@ -30,7 +32,9 @@ import { TitleBarComponent } from "../../components/title-bar/title-bar.componen
     MatSelectModule,
     GridWrapperModule,
     TitleBarComponent,
+    HttpModule,
+    SidebarModule,
   ],
-  providers: [SharedService],
+  providers: [PartiesService],
 })
 export class AccountsModule {}

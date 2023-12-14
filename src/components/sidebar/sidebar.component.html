@@ -9,8 +9,18 @@
     <menus (menuClicked)="onMenuClick()"></menus>
   </mat-sidenav>
   <mat-sidenav-content>
+    <notifier-container></notifier-container>
+    @if (loading) {
+    <ngx-loading
+      [show]="loading"
+      [config]="{ backdropBorderRadius: '3px' }"
+      [template]="customLoadingTemplate"
+    ></ngx-loading>
+    }
     <div class="main">
       <router-outlet></router-outlet>
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
+
+<ng-template #customLoadingTemplate> </ng-template>

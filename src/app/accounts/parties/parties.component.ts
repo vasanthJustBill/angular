@@ -2,7 +2,7 @@ import { Component } from "@angular/core";
 import _ from "lodash";
 import { MatDialog } from "@angular/material/dialog";
 import { Router } from "@angular/router";
-import { SharedService } from "../shared.service";
+import { PartiesService } from "../parties.service";
 
 @Component({
   selector: "app-parties",
@@ -62,26 +62,13 @@ export class PartiesComponent {
   constructor(
     public dialog: MatDialog,
     private router: Router,
-    private sharedService: SharedService
+    private httpService: PartiesService,
   ) {}
 
   getRowData() {
-    const rowData: any[] = [];
-    for (const i of _.range(1, 1000)) {
-      rowData.push({
-        id: i,
-        name: `Party ${i}`,
-        gstType: "Regular",
-        gstin: 123456789012345,
-        contact: 1234567890,
-        email: `party${i}@test.com`,
-        address: `Address ${i}`,
-        state: "State",
-      });
-    }
-    setTimeout(() => {
-      this.rowData = rowData;
-    }, 3000);
+    this.httpService.getAllParties().subscribe(data => {
+      this.rowData = data.parties;
+    })
   }
 
   onGridReady(params: any) {
@@ -97,7 +84,6 @@ export class PartiesComponent {
 
   editButtonFn(selectedRow: any) {
     const { id } = selectedRow;
-    this.sharedService.setSelectedParty(selectedRow);
     this.router.navigateByUrl(`/accounts/parties/edit/${id}`);
   }
 
@@ -107,7 +93,6 @@ export class PartiesComponent {
 
   rowDoubleClickedFn(selectedRow: any) {
     const { id } = selectedRow;
-    this.sharedService.setSelectedParty(selectedRow);
     this.router.navigateByUrl(`/accounts/parties/${id}`);
   }
 }

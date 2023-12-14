@@ -12,6 +12,8 @@ import { MatListModule } from "@angular/material/list";
 import { RouterModule } from "@angular/router";
 import { MenusComponent } from "./menus/menus.component";
 import { TitleBarComponent } from "../title-bar/title-bar.component";
+import { NgxLoadingModule } from "ngx-loading";
+import { SidebarService } from "./sidebar.service";
 
 @NgModule({
   declarations: [SidebarComponent, MenusComponent],
@@ -26,7 +28,9 @@ import { TitleBarComponent } from "../title-bar/title-bar.component";
     MatListModule,
     RouterModule,
     TitleBarComponent,
+    NgxLoadingModule.forRoot({}),
   ],
+  providers: [SidebarService],
   exports: [SidebarComponent],
 })
 export class SidebarModule {}

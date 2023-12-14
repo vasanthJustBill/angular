@@ -10,6 +10,7 @@ import { SharedService } from "../shared.service";
   styleUrl: "./party-form.component.scss",
 })
 export class PartyFormComponent {
+  title: string = "";
   newForm: boolean | undefined;
   editMode: boolean | undefined;
   saveButtonMessage: string = "Create";
@@ -38,11 +39,14 @@ export class PartyFormComponent {
 
       if (this.newForm) {
         this.saveButtonMessage = "Create";
+        this.title = "Create Party";
       } else if (this.editMode) {
         this.saveButtonMessage = "Save";
+        this.title = "Edit Party";
       } else {
         this.partyForm.disable();
         this.saveButtonMessage = "Edit";
+        this.title = "Show Party";
       }
     });
     this.sharedService.getSelectedParty().subscribe((party) => {
@@ -63,6 +67,7 @@ export class PartyFormComponent {
       this.partyForm.enable();
       this.editMode = true;
       this.saveButtonMessage = "Save";
+      this.title = "Edit Party";
     }
   }
 }

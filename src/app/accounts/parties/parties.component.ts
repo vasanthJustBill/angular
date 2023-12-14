@@ -10,6 +10,7 @@ import { SharedService } from "../shared.service";
   styleUrl: "./parties.component.scss",
 })
 export class PartiesComponent {
+  title: string = "Parties";
   columnDefs = [
     {
       headerName: "Party Name",

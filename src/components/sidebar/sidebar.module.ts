@@ -14,6 +14,7 @@ import { MenusComponent } from "./menus/menus.component";
 import { TitleBarComponent } from "../title-bar/title-bar.component";
 import { NgxLoadingModule } from "ngx-loading";
 import { SidebarService } from "./sidebar.service";
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [SidebarComponent, MenusComponent],
@@ -29,6 +30,7 @@ import { SidebarService } from "./sidebar.service";
     RouterModule,
     TitleBarComponent,
     NgxLoadingModule.forRoot({}),
+    ToastrModule.forRoot(),
   ],
   providers: [SidebarService],
   exports: [SidebarComponent],

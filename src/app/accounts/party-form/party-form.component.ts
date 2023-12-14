@@ -77,6 +77,7 @@ export class PartyFormComponent {
       (data) => {
         this.sidebar.setLoader(false);
         const { id } = data.party;
+        this.sidebar.showMessage("Party created successfully.", "success");
         this.router.navigateByUrl(`/accounts/parties/${id}`);
       },
       (error) => {

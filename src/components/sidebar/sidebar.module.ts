@@ -11,6 +11,7 @@ import { SidebarComponent } from "./sidebar.component";
 import { MatListModule } from "@angular/material/list";
 import { RouterModule } from "@angular/router";
 import { MenusComponent } from "./menus/menus.component";
+import { TitleBarComponent } from "../title-bar/title-bar.component";
 
 @NgModule({
   declarations: [SidebarComponent, MenusComponent],
@@ -24,6 +25,7 @@ import { MenusComponent } from "./menus/menus.component";
     MatMenuModule,
     MatListModule,
     RouterModule,
+    TitleBarComponent,
   ],
   exports: [SidebarComponent],
 })

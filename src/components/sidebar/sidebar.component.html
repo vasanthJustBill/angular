@@ -6,39 +6,10 @@
 </mat-toolbar>
 <mat-sidenav-container class="container">
   <mat-sidenav mode="side" [opened]="isSidenavOpen" class="sidenav">
-    <mat-nav-list>
-      <a mat-list-item routerLink="/">
-        <span class="title">Dashboard</span>
-      </a>
-      <mat-list-item (click)="toggleAccounts()">
-        <span class="title"> Accounts </span>
-      </mat-list-item>
-      @if (showAccounts) {
-      <a mat-list-item routerLink="/accounts/parties">
-        <span class="title sub">Parties</span>
-      </a>
-      <a mat-list-item routerLink="/accounts/suppliers">
-        <span class="title sub">Suppliers</span>
-      </a>
-      }
-      <a mat-list-item routerLink="/invoices">
-        <span class="title">Invoices</span>
-      </a>
-      <a mat-list-item routerLink="/products">
-        <span class="title">Products</span>
-      </a>
-      <a mat-list-item routerLink="/settings">
-        <span class="title">Settings</span>
-      </a>
-    </mat-nav-list>
+    <menus (menuClicked)="onMenuClick()"></menus>
   </mat-sidenav>
   <mat-sidenav-content>
     <div class="main">
-      @if (pageTitle != "") {
-      <mat-toolbar>
-        <span>{{ pageTitle }}</span>
-      </mat-toolbar>
-      }
       <router-outlet></router-outlet>
     </div>
   </mat-sidenav-content>

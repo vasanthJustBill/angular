@@ -1,0 +1,20 @@
+<mat-nav-list>
+  @for (item of menusList; track item.id) { @if (item.link) {
+  <a mat-list-item [routerLink]="item.link" (click)="onMenuClick()">
+    <span class="title">{{ item.title }}</span>
+  </a>
+  } @else {
+  <mat-list-item (click)="toggleMenus(item)">
+    <span class="title">{{ item.title }}</span>
+  </mat-list-item>
+  @if (item.sub_menus && item.isShowing) { @for (sub of item.sub_menus; track
+  sub.id) { @if (sub.link) {
+  <a mat-list-item [routerLink]="sub.link" (click)="onMenuClick()">
+    <span class="title sub">{{ sub.title }}</span>
+  </a>
+  } @else {
+  <mat-list-item>
+    <span class="title sub">{{ sub.title }}</span>
+  </mat-list-item>
+  } } } } }
+</mat-nav-list>

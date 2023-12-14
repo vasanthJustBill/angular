@@ -10,9 +10,10 @@ import { RouterOutlet } from "@angular/router";
 import { SidebarComponent } from "./sidebar.component";
 import { MatListModule } from "@angular/material/list";
 import { RouterModule } from "@angular/router";
+import { MenusComponent } from "./menus/menus.component";
 
 @NgModule({
-  declarations: [SidebarComponent],
+  declarations: [SidebarComponent, MenusComponent],
   imports: [
     CommonModule,
     MatSidenavModule,

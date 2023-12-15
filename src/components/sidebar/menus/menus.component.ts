@@ -1,12 +1,14 @@
 import { Component, EventEmitter, Output } from "@angular/core";
 import * as _ from "lodash";
+import { SidebarService } from "../sidebar.service";
 
 interface Menu {
   id: number;
   title: string;
+  sequence: number;
   link?: string;
   isShowing?: boolean;
-  sub_menus?: Menu[];
+  subMenus?: Menu[];
 }
 
 @Component({
@@ -16,60 +18,20 @@ interface Menu {
 })
 export class MenusComponent {
   @Output() menuClicked = new EventEmitter(false);
-  menusList: Menu[] = [
-    {
-      id: 1,
-      title: "Dashboard",
-      link: "/",
-    },
-    {
-      id: 2,
-      title: "Administration",
-      isShowing: false,
-      sub_menus: [
-        {
-          id: 3,
-          title: "Mapping",
-          link: "mapping",
-        },
-        {
-          id: 4,
-          title: "Bulk Uploads",
-          link: "uploads",
-        },
-        {
-          id: 5,
-          title: "Custom Fields",
-          link: "custom_fields",
-        },
-      ],
-    },
-    {
-      id: 6,
-      title: "Parties",
-      link: "/accounts/parties",
-    },
-    {
-      id: 7,
-      title: "Suppliers",
-      link: "accounts/suppliers",
-    },
-    {
-      id: 8,
-      title: "Invoices",
-      link: "invoices",
-    },
-    {
-      id: 9,
-      title: "Products",
-      link: "products",
-    },
-    {
-      id: 10,
-      title: "Settings",
-      link: "settings",
-    },
-  ];
+  menusList: Menu[] | undefined;
+
+  constructor(private httpService: SidebarService) {}
+
+  ngOnInit() {
+    this.httpService.getMenuss().subscribe((data) => {
+      data.forEach((element: Menu) => {
+        if (element.subMenus?.length) {
+          element.subMenus = _.orderBy(element.subMenus, "sequence");
+        }
+      });
+      this.menusList = data;
+    });
+  }
 
   toggleMenus(menu: Menu) {
     menu.isShowing = !menu.isShowing;

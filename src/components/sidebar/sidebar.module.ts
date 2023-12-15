@@ -14,7 +14,8 @@ import { MenusComponent } from "./menus/menus.component";
 import { TitleBarComponent } from "../title-bar/title-bar.component";
 import { NgxLoadingModule } from "ngx-loading";
 import { SidebarService } from "./sidebar.service";
-import { ToastrModule } from 'ngx-toastr';
+import { ToastrModule } from "ngx-toastr";
+import { HttpModule } from "../http/http.module";
 
 @NgModule({
   declarations: [SidebarComponent, MenusComponent],
@@ -31,6 +32,7 @@ import { ToastrModule } from 'ngx-toastr';
     TitleBarComponent,
     NgxLoadingModule.forRoot({}),
     ToastrModule.forRoot(),
+    HttpModule,
   ],
   providers: [SidebarService],
   exports: [SidebarComponent],

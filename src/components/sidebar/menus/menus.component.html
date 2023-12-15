@@ -7,7 +7,7 @@
   <mat-list-item (click)="toggleMenus(item)">
     <span class="title">{{ item.title }}</span>
   </mat-list-item>
-  @if (item.sub_menus && item.isShowing) { @for (sub of item.sub_menus; track
+  @if (item.subMenus && item.isShowing) { @for (sub of item.subMenus; track
   sub.id) { @if (sub.link) {
   <a mat-list-item [routerLink]="sub.link" (click)="onMenuClick()">
     <span class="title sub">{{ sub.title }}</span>

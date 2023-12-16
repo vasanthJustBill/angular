@@ -1,0 +1,103 @@
+<title-bar [title]="'Company Info'"></title-bar>
+<div class="main">
+  <div class="button-row">
+    <button mat-raised-button color="warn">Cancel</button>
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="!companyForm.valid"
+      (click)="onSubmit()"
+    >
+      Save
+    </button>
+  </div>
+  <div>
+    <form [formGroup]="companyForm">
+      <mat-card-content class="card">
+        <mat-form-field appearance="outline" class="field single">
+          <mat-label>Name</mat-label>
+          <input matInput formControlName="name" required />
+          @if (companyForm.get("name")?.hasError("required")) {
+          <mat-error>Name is required</mat-error>
+          }
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="field single">
+          <mat-label>Description</mat-label>
+          <textarea matInput formControlName="description"></textarea>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="field double">
+          <mat-label>Shipping Address</mat-label>
+          <textarea matInput formControlName="shippingAddress"></textarea>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="field double pd-o">
+          <mat-label>Billing Address</mat-label>
+          <textarea matInput formControlName="billingAddress"></textarea>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="field double">
+          <mat-label>Primary Contact</mat-label>
+          <input matInput formControlName="primaryContact" required />
+          @if (companyForm.get("primaryContact")?.hasError("required")) {
+          <mat-error>Primary Contact is required</mat-error>
+          } @else if (companyForm.get("primaryContact")?.hasError("invalidContact")) {
+          <mat-error>Provide valid contact number</mat-error>
+          }
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="field double">
+          <mat-label>Alternate Contact</mat-label>
+          <input matInput formControlName="alternateContact" />
+          @if (companyForm.get("primaryContact")?.hasError("invalidContact")) {
+          <mat-error>Provide valid contact number</mat-error>
+          }
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="field double">
+          <mat-label>Primary Email</mat-label>
+          <input matInput formControlName="primaryEmail" required />
+          @if (companyForm.get("primaryEmail")?.hasError("required")) {
+          <mat-error>Primary Email is required</mat-error>
+          } @else if (companyForm.get("primaryEmail")?.hasError("email")) {
+          <mat-error>Provide valid email address</mat-error>
+          }
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="field double">
+          <mat-label>Alternate Email</mat-label>
+          <input matInput formControlName="alternateEmail" />
+          @if (companyForm.get("alternateEmail")?.hasError("email")) {
+          <mat-error>Provide valid email address</mat-error>
+          }
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="field double">
+          <mat-label>Buisness Type</mat-label>
+          <mat-select formControlName="businessType" required>
+            <mat-option value="retail">Retail</mat-option>
+            <mat-option value="wholesale">Wholesale</mat-option>
+          </mat-select>
+          @if (companyForm.get("businessType")?.hasError("required")) {
+          <mat-error>Buisness Type is required</mat-error>
+          }
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="field double">
+          <mat-label>Website</mat-label>
+          <input matInput formControlName="website" />
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="field double">
+          <mat-label>GST Type</mat-label>
+          <mat-select formControlName="gstType" required>
+            <mat-option value="regular">Regular</mat-option>
+            <mat-option value="buisness">Buisness</mat-option>
+          </mat-select>
+          @if (companyForm.get("gstType")?.hasError("required")) {
+          <mat-error>GST Type is required</mat-error>
+          }
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="field double">
+          <mat-label>GSTIN</mat-label>
+          <input matInput formControlName="gstin" required />
+          @if (companyForm.get("gstin")?.hasError("required")) {
+          <mat-error>GSTIN is required</mat-error>
+          }
+        </mat-form-field>
+      </mat-card-content>
+    </form>
+  </div>
+</div>

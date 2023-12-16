@@ -13,7 +13,7 @@ export class SidebarComponent {
   constructor(private httpService: SidebarService) {}
 
   ngOnInit() {
-    this.isSidenavOpen = window.innerWidth > 768;
+    this.isSidenavOpen = window.innerWidth > 900;
     this.httpService.getIsLoading().subscribe(data => {
       this.loading = data;
     })
@@ -24,7 +24,7 @@ export class SidebarComponent {
   }
 
   onMenuClick() {
-    if (window.innerWidth <= 768) this.isSidenavOpen = false;
+    if (window.innerWidth <= 900) this.isSidenavOpen = false;
     this.httpService.setLoader(false);
   }
 }

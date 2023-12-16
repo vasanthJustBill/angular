@@ -19,6 +19,7 @@ export class PartiesComponent {
     {
       headerName: "GST Type",
       field: "gstType",
+      cellRenderer: this.gstTypeRenderer,
     },
     {
       headerName: "GSTIN",
@@ -27,21 +28,31 @@ export class PartiesComponent {
     },
     {
       headerName: "Phone Number",
-      field: "contact",
+      field: "primaryContact",
+      type: "number",
+      cellDataType: "number",
+    },
+    {
+      headerName: "Alternate Number",
+      field: "alternateContact",
       type: "number",
       cellDataType: "number",
     },
     {
       headerName: "Email ID",
-      field: "email",
+      field: "primaryEmail",
     },
     {
-      headerName: "Address",
-      field: "address",
+      headerName: "Alternate Email ID",
+      field: "alternateEmail",
     },
     {
-      headerName: "State",
-      field: "state",
+      headerName: "Shipping Address",
+      field: "shippingAddress",
+    },
+    {
+      headerName: "Billing Address",
+      field: "billingAddress",
     },
   ];
   rowData: any[] = [];
@@ -55,20 +66,29 @@ export class PartiesComponent {
     checkboxSelection: true,
     pagination: true,
     defaultCsvExportParams: {
-      fileName: "Parties",
+      fileName: "parties",
     },
   };
+
+  gstTypeRenderer(params: { value: "one" | "two" }) {
+    const dropdown = {
+      one: "Regular",
+      two: "Business",
+    };
+
+    return dropdown[params.value];
+  }
 
   constructor(
     public dialog: MatDialog,
     private router: Router,
-    private httpService: PartiesService,
+    private httpService: PartiesService
   ) {}
 
   getRowData() {
-    this.httpService.getAllParties().subscribe(data => {
+    this.httpService.getAllParties().subscribe((data) => {
       this.rowData = data.parties;
-    })
+    });
   }
 
   onGridReady(params: any) {

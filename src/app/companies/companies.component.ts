@@ -15,7 +15,7 @@ import { MatInputModule } from "@angular/material/input";
 import { MatSelectModule } from "@angular/material/select";
 import { MatButtonModule } from "@angular/material/button";
 import { FlexLayoutModule } from "@angular/flex-layout";
-import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatCheckboxModule } from "@angular/material/checkbox";
 
 // Custom validator function for a valid contact number
 function validateContact(
@@ -60,6 +60,8 @@ export class CompaniesComponent {
     gstType: ["", Validators.required],
     gstin: ["", Validators.required],
   });
+  buttonPlaceHolder: string = "Edit";
+  editMode: boolean = false;
 
   constructor(private httpService: CompaniesService, private fb: FormBuilder) {}
 
@@ -68,18 +70,32 @@ export class CompaniesComponent {
   }
 
   fetchCompanies() {
-    this.httpService.getCompany().subscribe((data) => {
-      if (data) this.companyForm.patchValue(data);
-    });
+    this.httpService.getCompany().subscribe(
+      (data) => {
+        if (data && data.company) {
+          this.companyForm.patchValue(data.company);
+        }
+        this.companyForm.disable();
+      },
+      (_error) => {
+        this.companyForm.enable();
+        this.editMode = true;
+        this.buttonPlaceHolder = "Create";
+      }
+    );
   }
 
   onSubmit() {
-    if (this.companyForm.valid) {
+    if (this.editMode) {
       this.httpService
         .createCompany(this.companyForm.getRawValue())
-        .subscribe((data) => {
+        .subscribe((_data) => {
           this.fetchCompanies();
         });
+    } else {
+      this.editMode = true;
+      this.buttonPlaceHolder = "Update";
+      this.companyForm.enable();
     }
   }
 }

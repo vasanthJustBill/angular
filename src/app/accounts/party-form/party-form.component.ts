@@ -20,10 +20,13 @@ export class PartyFormComponent {
     name: ["", Validators.required],
     gstType: [""],
     gstin: [""],
-    contact: [""],
-    email: ["", Validators.email],
-    address: [""],
-    state: [""],
+    primaryContact: [""],
+    alternateContact: [""],
+    primaryEmail: [""],
+    alternateEmail: [""],
+    shippingAddress: [""],
+    billingAddress: [""],
+    companyId: [""],
   });
 
   constructor(
@@ -88,14 +91,23 @@ export class PartyFormComponent {
   }
 
   updateParty() {
+    this.sidebar.setLoader(true);
     const party = this.partyForm.getRawValue();
-    this.httpService.updateParty(party.id, party).subscribe((data) => {
-      this.editMode = false;
-      this.partyForm.disable();
-    });
+    this.httpService.updateParty(party.id, party).subscribe(
+      (data) => {
+        this.editMode = false;
+        this.partyForm.disable();
+        this.sidebar.showMessage("Party updated successfully.", "success");
+      },
+      (error) => {
+        this.sidebar.setLoader(false);
+        this.sidebar.showMessage(error.error.error, "error");
+      }
+    );
   }
 
   onSubmit() {
+    this.partyForm.patchValue({ companyId: 1 });
     if (this.newForm) {
       this.createParty();
     } else if (this.editMode) {

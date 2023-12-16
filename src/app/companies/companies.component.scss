@@ -16,7 +16,7 @@
   flex-direction: row;
   flex-wrap: wrap;
   width: calc(100vw - 300px);
-  gap: 5px;
+  gap: 10px;
   margin-top: 20px;
 }
 
@@ -30,5 +30,5 @@
 }
 
 .double {
-  flex-basis: calc(50% - 8px);
+  flex-basis: calc(50% - 5px);
 }

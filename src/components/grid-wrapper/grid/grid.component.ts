@@ -47,6 +47,7 @@ export class GridComponent {
         floatingFilter: false,
         width: 70,
         maxWidth: 70,
+        pinned: "left",
       });
     }
   }

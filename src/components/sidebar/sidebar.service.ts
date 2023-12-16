@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, Observable, catchError, map } from "rxjs";
+import { Observable, catchError, map } from "rxjs";
 import { ToastrService } from "ngx-toastr";
 import { HttpService } from "../http/http.service";
 
@@ -7,16 +7,7 @@ import { HttpService } from "../http/http.service";
   providedIn: "root",
 })
 export class SidebarService {
-  private _loader = new BehaviorSubject(false);
   constructor(private toastr: ToastrService, private http: HttpService) {}
-
-  getIsLoading(): Observable<boolean> {
-    return this._loader.asObservable();
-  }
-
-  setLoader(value: boolean) {
-    this._loader.next(value);
-  }
 
   showMessage(message: string, action: string, duration?: number): void {
     if (action === "success") {
@@ -30,6 +21,13 @@ export class SidebarService {
 
   getMenuss(): Observable<any> {
     return this.http.get("menus").pipe(
+      map((response) => response),
+      catchError((error) => this.handleError(error))
+    );
+  }
+
+  getCompany(): Observable<any> {
+    return this.http.get("companies").pipe(
       map((response) => response),
       catchError((error) => this.handleError(error))
     );

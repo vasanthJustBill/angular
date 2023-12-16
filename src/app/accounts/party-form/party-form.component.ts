@@ -35,7 +35,11 @@ export class PartyFormComponent {
     private fb: FormBuilder,
     private httpService: PartiesService,
     private sidebar: SidebarService
-  ) {}
+  ) {
+    // sidebar.getCompanyId().subscribe((data) => {
+    //   if (data) this.partyForm.patchValue({ companyId: data });
+    // });
+  }
 
   ngOnInit() {
     this.route.url.subscribe((url) => {
@@ -74,24 +78,20 @@ export class PartyFormComponent {
   }
 
   createParty() {
-    this.sidebar.setLoader(true);
     const party = this.partyForm.getRawValue();
     this.httpService.createParty(party).subscribe(
       (data) => {
-        this.sidebar.setLoader(false);
         const { id } = data.party;
         this.sidebar.showMessage("Party created successfully.", "success");
         this.router.navigateByUrl(`/accounts/parties/${id}`);
       },
       (error) => {
-        this.sidebar.setLoader(false);
         this.sidebar.showMessage(error.error.error, "error");
       }
     );
   }
 
   updateParty() {
-    this.sidebar.setLoader(true);
     const party = this.partyForm.getRawValue();
     this.httpService.updateParty(party.id, party).subscribe(
       (data) => {
@@ -100,14 +100,12 @@ export class PartyFormComponent {
         this.sidebar.showMessage("Party updated successfully.", "success");
       },
       (error) => {
-        this.sidebar.setLoader(false);
         this.sidebar.showMessage(error.error.error, "error");
       }
     );
   }
 
   onSubmit() {
-    this.partyForm.patchValue({ companyId: 1 });
     if (this.newForm) {
       this.createParty();
     } else if (this.editMode) {

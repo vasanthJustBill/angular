@@ -1,107 +1,136 @@
 <title-bar [title]="'Company Info'"></title-bar>
 <div class="main">
-  <div class="inner">
-    <div class="button-row">
-      <button mat-raised-button color="warn">Cancel</button>
-      <button
-        mat-raised-button
-        color="primary"
-        type="submit"
-        [disabled]="editMode ? !companyForm.valid : false"
-        (click)="onSubmit()"
-      >
-        {{ buttonPlaceHolder }}
-      </button>
-    </div>
-    <div>
-      <form [formGroup]="companyForm">
-        <mat-card-content class="card">
-          <mat-form-field appearance="outline" class="field single">
+  <mat-card>
+    <mat-card-content>
+      <form [formGroup]="companyForm" class="company-form">
+        <div class="row">
+          <mat-form-field appearance="outline" class="field" flex-gt-md="50">
             <mat-label>Name</mat-label>
             <input matInput formControlName="name" required />
-            @if (companyForm.get("name")?.hasError("required")) {
+            @if (companyForm.get('name')?.hasError('required')) {
             <mat-error>Name is required</mat-error>
             }
           </mat-form-field>
-          <mat-form-field appearance="outline" class="field single">
+          <mat-form-field appearance="outline" class="field" flex-gt-md="50">
             <mat-label>Description</mat-label>
             <textarea matInput formControlName="description"></textarea>
           </mat-form-field>
-          <mat-form-field appearance="outline" class="field double">
+        </div>
+
+        <div class="row">
+          <mat-form-field appearance="outline" class="field" flex-gt-md="50">
             <mat-label>Shipping Address</mat-label>
-            <textarea matInput formControlName="shippingAddress"></textarea>
+            <textarea matInput formControlName="shippingAddress" (change)="shippingCheckbox()"></textarea>
           </mat-form-field>
-          <mat-form-field appearance="outline" class="field double pd-o">
+
+          <mat-form-field appearance="outline" class="field" flex-gt-md="50">
             <mat-label>Billing Address</mat-label>
             <textarea matInput formControlName="billingAddress"></textarea>
           </mat-form-field>
-          <mat-form-field appearance="outline" class="field double">
+        </div>
+
+        <div class="row">
+          <span class="field" flex-gt-md="50"></span>
+          <mat-checkbox
+            class="field checkbox"
+            flex-gt-md="50"
+            matInput
+            formControlName="sameAsShipping"
+            (change)="shippingCheckbox()"
+          >
+            Same as Shipping Address
+          </mat-checkbox>
+        </div>
+
+        <div class="row">
+          <mat-form-field appearance="outline" class="field" flex-gt-md="50">
             <mat-label>Primary Contact</mat-label>
             <input matInput formControlName="primaryContact" required />
-            @if (companyForm.get("primaryContact")?.hasError("required")) {
+            @if (companyForm.get('primaryContact')?.hasError('required')) {
             <mat-error>Primary Contact is required</mat-error>
-            } @else if
-            (companyForm.get("primaryContact")?.hasError("invalidContact")) {
+            } @if (companyForm.get('primaryContact')?.hasError('invalidContact')) {
             <mat-error>Provide valid contact number</mat-error>
             }
           </mat-form-field>
-          <mat-form-field appearance="outline" class="field double">
+
+          <mat-form-field appearance="outline" class="field" flex-gt-md="50">
             <mat-label>Alternate Contact</mat-label>
             <input matInput formControlName="alternateContact" />
-            @if (companyForm.get("primaryContact")?.hasError("invalidContact"))
-            {
+            @if (companyForm.get('alternateContact')?.hasError('invalidContact')) {
             <mat-error>Provide valid contact number</mat-error>
             }
           </mat-form-field>
-          <mat-form-field appearance="outline" class="field double">
+        </div>
+
+        <div class="row">
+          <mat-form-field appearance="outline" class="field" flex-gt-md="50">
             <mat-label>Primary Email</mat-label>
             <input matInput formControlName="primaryEmail" required />
-            @if (companyForm.get("primaryEmail")?.hasError("required")) {
+            @if (companyForm.get('primaryEmail')?.hasError('required')) {
             <mat-error>Primary Email is required</mat-error>
-            } @else if (companyForm.get("primaryEmail")?.hasError("email")) {
+            } @if (companyForm.get('primaryEmail')?.hasError('email')) {
             <mat-error>Provide valid email address</mat-error>
             }
           </mat-form-field>
-          <mat-form-field appearance="outline" class="field double">
+
+          <mat-form-field appearance="outline" class="field" flex-gt-md="50">
             <mat-label>Alternate Email</mat-label>
             <input matInput formControlName="alternateEmail" />
-            @if (companyForm.get("alternateEmail")?.hasError("email")) {
+            @if (companyForm.get('alternateEmail')?.hasError('email')) {
             <mat-error>Provide valid email address</mat-error>
             }
           </mat-form-field>
-          <mat-form-field appearance="outline" class="field double">
-            <mat-label>Buisness Type</mat-label>
+        </div>
+
+        <div class="row">
+          <mat-form-field appearance="outline" class="field" flex-gt-md="50">
+            <mat-label>Business Type</mat-label>
             <mat-select formControlName="businessType" required>
               <mat-option value="retail">Retail</mat-option>
               <mat-option value="wholesale">Wholesale</mat-option>
             </mat-select>
-            @if (companyForm.get("businessType")?.hasError("required")) {
+            @if (companyForm.get('businessType')?.hasError('required')) {
             <mat-error>Buisness Type is required</mat-error>
             }
           </mat-form-field>
-          <mat-form-field appearance="outline" class="field double">
+          <mat-form-field appearance="outline" class="field" flex-gt-md="50">
             <mat-label>Website</mat-label>
             <input matInput formControlName="website" />
           </mat-form-field>
-          <mat-form-field appearance="outline" class="field double">
+        </div>
+        <div class="row">
+          <mat-form-field appearance="outline" class="field" flex-gt-md="50">
             <mat-label>GST Type</mat-label>
             <mat-select formControlName="gstType" required>
               <mat-option value="regular">Regular</mat-option>
-              <mat-option value="buisness">Buisness</mat-option>
+              <mat-option value="business">Business</mat-option>
             </mat-select>
-            @if (companyForm.get("gstType")?.hasError("required")) {
+            @if (companyForm.get('gstType')?.hasError('required')) {
             <mat-error>GST Type is required</mat-error>
             }
           </mat-form-field>
-          <mat-form-field appearance="outline" class="field double">
+
+          <mat-form-field appearance="outline" class="field" flex-gt-md="50">
             <mat-label>GSTIN</mat-label>
             <input matInput formControlName="gstin" required />
-            @if (companyForm.get("gstin")?.hasError("required")) {
+            @if (companyForm.get('gstin')?.hasError('required')) {
             <mat-error>GSTIN is required</mat-error>
             }
           </mat-form-field>
-        </mat-card-content>
+        </div>
       </form>
-    </div>
-  </div>
+    </mat-card-content>
+    <mat-card-actions class="button-row">
+      <button mat-raised-button color="warn" (click)="onReset()">Cancel</button>
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="companyForm.invalid"
+        (click)="onSubmit()"
+      >
+        {{ buttonPlaceHolder }}
+      </button>
+    </mat-card-actions>
+  </mat-card>
 </div>

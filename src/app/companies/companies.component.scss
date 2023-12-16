@@ -9,26 +9,31 @@
 
 .main {
   margin: 0 20px;
-}
-
-.card {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  width: calc(100vw - 300px);
-  gap: 10px;
   margin-top: 20px;
 }
 
+.company-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
 .field {
-  box-sizing: border-box;
-  min-width: 400px;
+  width: 100%;
 }
 
-.single {
-  flex-basis: 100%;
+/* Adjust styles as needed */
+@media (min-width: 768px) {
+  .field[flex-gt-md~="50"] {
+    width: calc(50% - 10px);
+  }
 }
 
-.double {
-  flex-basis: calc(50% - 5px);
+.checkbox {
+  padding-bottom: 22px;
 }

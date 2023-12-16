@@ -14,8 +14,10 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { MatSelectModule } from "@angular/material/select";
 import { MatButtonModule } from "@angular/material/button";
-import { FlexLayoutModule } from "@angular/flex-layout";
 import { MatCheckboxModule } from "@angular/material/checkbox";
+import { SidebarModule } from "../../components/sidebar/sidebar.module";
+import { SidebarService } from "../../components/sidebar/sidebar.service";
+import * as _ from "lodash";
 
 // Custom validator function for a valid contact number
 function validateContact(
@@ -37,8 +39,8 @@ function validateContact(
     MatInputModule,
     MatSelectModule,
     MatButtonModule,
-    FlexLayoutModule,
     MatCheckboxModule,
+    SidebarModule,
   ],
   providers: [CompaniesService],
   templateUrl: "./companies.component.html",
@@ -59,11 +61,16 @@ export class CompaniesComponent {
     website: [""],
     gstType: ["", Validators.required],
     gstin: ["", Validators.required],
+    sameAsShipping: [""],
   });
-  buttonPlaceHolder: string = "Edit";
+  buttonPlaceHolder: string = "Create";
   editMode: boolean = false;
 
-  constructor(private httpService: CompaniesService, private fb: FormBuilder) {}
+  constructor(
+    private httpService: CompaniesService,
+    private fb: FormBuilder,
+    private sidebar: SidebarService
+  ) {}
 
   ngOnInit() {
     this.fetchCompanies();
@@ -74,28 +81,45 @@ export class CompaniesComponent {
       (data) => {
         if (data && data.company) {
           this.companyForm.patchValue(data.company);
+          this.buttonPlaceHolder = "Update";
+          const { sameAsShipping } = this.companyForm.getRawValue();
+          if (sameAsShipping) {
+            this.companyForm.get("billingAddress")?.disable();
+          }
         }
-        this.companyForm.disable();
       },
-      (_error) => {
-        this.companyForm.enable();
-        this.editMode = true;
-        this.buttonPlaceHolder = "Create";
-      }
+      (_error) => {}
     );
   }
 
+  onReset() {
+    this.fetchCompanies();
+  }
+
   onSubmit() {
-    if (this.editMode) {
-      this.httpService
-        .createCompany(this.companyForm.getRawValue())
-        .subscribe((_data) => {
-          this.fetchCompanies();
-        });
+    const { billingAddress, shippingAddress } = this.companyForm.getRawValue();
+    if (_.isEqual(billingAddress, shippingAddress)) {
+      this.companyForm.patchValue({ sameAsShipping: true });
+    }
+    this.httpService.createCompany(this.companyForm.getRawValue()).subscribe(
+      (_data) => {
+        this.fetchCompanies();
+        this.sidebar.showMessage(
+          `Company ${_.lowerCase(this.buttonPlaceHolder)}d successfully.`,
+          "success"
+        );
+      },
+      (error) => {}
+    );
+  }
+
+  shippingCheckbox() {
+    const { shippingAddress, sameAsShipping } = this.companyForm.getRawValue();
+    if (sameAsShipping) {
+      this.companyForm.get("billingAddress")?.disable();
+      this.companyForm.patchValue({ billingAddress: shippingAddress });
     } else {
-      this.editMode = true;
-      this.buttonPlaceHolder = "Update";
-      this.companyForm.enable();
+      this.companyForm.get("billingAddress")?.enable();
     }
   }
 }

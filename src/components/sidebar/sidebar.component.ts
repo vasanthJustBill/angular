@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, signal } from "@angular/core";
 import { SidebarService } from "./sidebar.service";
 
 @Component({
@@ -9,14 +9,14 @@ import { SidebarService } from "./sidebar.service";
 export class SidebarComponent {
   isSidenavOpen: boolean = true;
   loading: boolean = false;
+  companyId: number | undefined;
+  companyName: string | undefined;
 
   constructor(private httpService: SidebarService) {}
 
   ngOnInit() {
     this.isSidenavOpen = window.innerWidth > 900;
-    this.httpService.getIsLoading().subscribe(data => {
-      this.loading = data;
-    })
+    this.fetchCompany();
   }
 
   toggleSidenav() {
@@ -25,6 +25,15 @@ export class SidebarComponent {
 
   onMenuClick() {
     if (window.innerWidth <= 900) this.isSidenavOpen = false;
-    this.httpService.setLoader(false);
+  }
+
+  fetchCompany() {
+    this.httpService.getCompany().subscribe((data) => {
+      if (data && data.company) {
+        const { id, name } = data.company;
+        this.companyId = id;
+        this.companyName = name;
+      }
+    });
   }
 }

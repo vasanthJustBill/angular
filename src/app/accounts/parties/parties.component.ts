@@ -3,6 +3,7 @@ import _ from "lodash";
 import { MatDialog } from "@angular/material/dialog";
 import { Router } from "@angular/router";
 import { PartiesService } from "../parties.service";
+import { SharedService } from "../../shared.service";
 
 @Component({
   selector: "app-parties",
@@ -70,10 +71,10 @@ export class PartiesComponent {
     },
   };
 
-  gstTypeRenderer(params: { value: "one" | "two" }) {
+  gstTypeRenderer(params: { value: "regular" | "buisness" }) {
     const dropdown = {
-      one: "Regular",
-      two: "Business",
+      regular: "Regular",
+      buisness: "Buisness",
     };
 
     return dropdown[params.value];
@@ -82,7 +83,8 @@ export class PartiesComponent {
   constructor(
     public dialog: MatDialog,
     private router: Router,
-    private httpService: PartiesService
+    private httpService: PartiesService,
+    private shared: SharedService
   ) {}
 
   getRowData() {
@@ -104,11 +106,21 @@ export class PartiesComponent {
 
   editButtonFn(selectedRow: any) {
     const { id } = selectedRow;
-    this.router.navigateByUrl(`/accounts/parties/edit/${id}`);
+    this.router.navigateByUrl(`/accounts/parties/${id}`);
   }
 
   deleteButtonFn(selectedRow: any) {
-    alert("Delete Button Clicked");
+    const { id } = selectedRow;
+    this.httpService.deleteParty(id).subscribe(
+      (data) => {
+        this.shared.showMessage("Party deleted successfully.", "success");
+        this.getRowData();
+      },
+      (error) => {
+        this.shared.showMessage(error.error.error, "error");
+        this.getRowData();
+      }
+    );
   }
 
   rowDoubleClickedFn(selectedRow: any) {

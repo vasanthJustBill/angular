@@ -1,5 +1,7 @@
-import { Component, signal } from "@angular/core";
+import { Component } from "@angular/core";
 import { SidebarService } from "./sidebar.service";
+import { SharedService } from "../../app/shared.service";
+import { ActivatedRoute, Router } from "@angular/router";
 
 @Component({
   selector: "app-sidebar",
@@ -9,14 +11,24 @@ import { SidebarService } from "./sidebar.service";
 export class SidebarComponent {
   isSidenavOpen: boolean = true;
   loading: boolean = false;
-  companyId: number | undefined;
-  companyName: string | undefined;
+  companyName: string = "JuzBill";
 
-  constructor(private httpService: SidebarService) {}
+  constructor(
+    private httpService: SidebarService,
+    private shared: SharedService,
+    private router: Router,
+    private route: ActivatedRoute,
+  ) {}
 
   ngOnInit() {
     this.isSidenavOpen = window.innerWidth > 900;
     this.fetchCompany();
+    this.shared.companyName.subscribe((name) => {
+      if (name) this.companyName = name;
+    });
+    this.shared.loader.subscribe((value) => {
+      this.loading = value;
+    });
   }
 
   toggleSidenav() {
@@ -28,12 +40,18 @@ export class SidebarComponent {
   }
 
   fetchCompany() {
-    this.httpService.getCompany().subscribe((data) => {
-      if (data && data.company) {
-        const { id, name } = data.company;
-        this.companyId = id;
-        this.companyName = name;
+    this.httpService.getCompany().subscribe(
+      (data) => {
+        if (data && data.company) {
+          const { id, name } = data.company;
+          this.companyName = name;
+          this.shared.companyId = id;
+        }
+      },
+      (error) => {
+        this.shared.showMessage("Create Company Details first", "warning");
+        this.router.navigateByUrl("/companies");
       }
-    });
+    );
   }
 }

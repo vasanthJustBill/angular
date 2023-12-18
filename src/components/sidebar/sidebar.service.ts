@@ -1,23 +1,12 @@
 import { Injectable } from "@angular/core";
 import { Observable, catchError, map } from "rxjs";
-import { ToastrService } from "ngx-toastr";
 import { HttpService } from "../http/http.service";
 
 @Injectable({
   providedIn: "root",
 })
 export class SidebarService {
-  constructor(private toastr: ToastrService, private http: HttpService) {}
-
-  showMessage(message: string, action: string, duration?: number): void {
-    if (action === "success") {
-      this.toastr.success(message);
-    } else if (action === "error") {
-      this.toastr.error(message);
-    } else {
-      this.toastr.warning(message);
-    }
-  }
+  constructor(private http: HttpService) {}
 
   getMenuss(): Observable<any> {
     return this.http.get("menus").pipe(

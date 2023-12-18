@@ -16,6 +16,8 @@ import { TitleBarComponent } from "../../components/title-bar/title-bar.componen
 import { PartiesService } from "./parties.service";
 import { HttpModule } from "../../components/http/http.module";
 import { SidebarModule } from "../../components/sidebar/sidebar.module";
+import { MatCheckboxModule } from "@angular/material/checkbox";
+import { FormWrapperModule } from "../../components/form-wrapper/form-wrapper.module";
 
 @NgModule({
   declarations: [PartyFormComponent, PartiesComponent],
@@ -34,6 +36,8 @@ import { SidebarModule } from "../../components/sidebar/sidebar.module";
     TitleBarComponent,
     HttpModule,
     SidebarModule,
+    MatCheckboxModule,
+    FormWrapperModule,
   ],
   providers: [PartiesService],
 })

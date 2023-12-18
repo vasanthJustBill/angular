@@ -1,0 +1,51 @@
+<form [formGroup]="formGroup" class="form">
+  @for (row of rowFields; track $index) {
+  <div class="row">
+    @for (control of row; track control.key) {
+    @if (control.type === 'blank') {
+      <span class="field" flex-gt-md="50"></span>
+    }
+    @else if (control.type === 'checkbox') {
+      <mat-checkbox
+        class="field checkbox"
+        flex-gt-md="50"
+        matInput
+        [formControlName]="control.key"
+      >
+        {{ control.label }}
+      </mat-checkbox>
+    }
+    @else {
+      <mat-form-field appearance="outline" class="field" flex-gt-md="50">
+        <mat-label [innerHTML]="control.label"></mat-label>
+        @if (control.type === 'text') {
+          <textarea matInput [formControlName]="control.key"></textarea>
+        }
+        @else if (control.type === "number") {
+          <input type="number" matInput [formControlName]="control.key" />
+        }
+        @else if (control.type === 'email') {
+          <input type="email" matInput [formControlName]="control.key" />
+        }
+        @else {
+          <input type="text" matInput [formControlName]="control.key" />
+        }
+        @if (formGroup.get(control.key)?.errors) {
+        <mat-error>
+          @if (formGroup.get(control.key)?.hasError('required')) {
+            {{ control.label }} is required.
+          }
+          @else if (formGroup.get(control.key)?.hasError('email')) {
+            Please enter a valid email address.
+          }
+          @else if (formGroup.get(control.key)?.hasError('invalidContact')) {
+            Provide a valid contact number.
+          }
+        </mat-error>
+        }
+      </mat-form-field>
+      }
+    }
+  </div>
+  }
+</form>

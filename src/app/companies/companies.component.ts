@@ -15,9 +15,8 @@ import { MatInputModule } from "@angular/material/input";
 import { MatSelectModule } from "@angular/material/select";
 import { MatButtonModule } from "@angular/material/button";
 import { MatCheckboxModule } from "@angular/material/checkbox";
-import { SidebarModule } from "../../components/sidebar/sidebar.module";
-import { SidebarService } from "../../components/sidebar/sidebar.service";
 import * as _ from "lodash";
+import { SharedService } from "../shared.service";
 
 // Custom validator function for a valid contact number
 function validateContact(
@@ -40,7 +39,6 @@ function validateContact(
     MatSelectModule,
     MatButtonModule,
     MatCheckboxModule,
-    SidebarModule,
   ],
   providers: [CompaniesService],
   templateUrl: "./companies.component.html",
@@ -69,7 +67,7 @@ export class CompaniesComponent {
   constructor(
     private httpService: CompaniesService,
     private fb: FormBuilder,
-    private sidebar: SidebarService
+    private shared: SharedService
   ) {}
 
   ngOnInit() {
@@ -77,6 +75,7 @@ export class CompaniesComponent {
   }
 
   fetchCompanies() {
+    this.shared.loader = true;
     this.httpService.getCompany().subscribe(
       (data) => {
         if (data && data.company) {
@@ -86,9 +85,13 @@ export class CompaniesComponent {
           if (sameAsShipping) {
             this.companyForm.get("billingAddress")?.disable();
           }
+          this.shared.companyName = data.company.name;
         }
+        this.shared.loader = false;
       },
-      (_error) => {}
+      (_error) => {
+        this.shared.loader = false;
+      }
     );
   }
 
@@ -97,6 +100,7 @@ export class CompaniesComponent {
   }
 
   onSubmit() {
+    this.shared.loader = true;
     const { billingAddress, shippingAddress } = this.companyForm.getRawValue();
     if (_.isEqual(billingAddress, shippingAddress)) {
       this.companyForm.patchValue({ sameAsShipping: true });
@@ -104,7 +108,7 @@ export class CompaniesComponent {
     this.httpService.createCompany(this.companyForm.getRawValue()).subscribe(
       (_data) => {
         this.fetchCompanies();
-        this.sidebar.showMessage(
+        this.shared.showMessage(
           `Company ${_.lowerCase(this.buttonPlaceHolder)}d successfully.`,
           "success"
         );
